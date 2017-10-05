@@ -50,9 +50,9 @@
                 $('#' + ev.target.id).parent().append("<ul id='" + id + "'></ul>");
                 $('#' + id).append($('#' + data).parent()[0]);
             }
-            if(ul.children('li').length == 0){
+            if (ul.children('li').length == 0) {
                 ul.remove();
-            } 
+            }
             updateClass();
         }
 
@@ -104,20 +104,19 @@
             ]
         };
 
-        function getLiTagWithTextInSpan(liId, text, spanId, style) {
-            return "<li id ='" + liId + "'><span id='" + spanId +
-                "' class='Collapsable " + style +
-                "' draggable='true' ondragstart='drag(event)'' ondragover='allowDrop(event)'' ondrop='drop(event)'' >" +
-                text + "</span></li>"
+        function getLiTagWithTextInSpan(liId, text, style ='') {
+            return "<li id ='" + liId + "' class='" + style +
+                "' draggable='true' ondragstart='drag(event)' ondragover='allowDrop(event)' ondrop='drop(event)'>" +
+                text + "</li>"
         }
 
         function generateTree(input) {
             var $coveringdiv = $('.cover');
             let id = generateUUID();
             let liId = generateUUID();
-            let spanId = generateUUID();
             $coveringdiv.append("<ul id='" + id + "'></ul>");
-            $('#' + id).append(getLiTagWithTextInSpan(liId, input.root, spanId, "root parent"));
+            $('#' + id).append(getLiTagWithTextInSpan(liId, input.root, "root parent"));
+            //$('#' + liId).toggle();
             id = generateUUID();
             $('#' + liId).append("<ul id='" + id + "'></ul>");
             generateNodes(input.data, $('#' + id))
@@ -126,8 +125,7 @@
         function generateNodes(data, ul) {
             data.forEach(function (element) {
                 let liId = generateUUID();
-                let spanId = generateUUID();
-                ul.append(getLiTagWithTextInSpan(liId, element.name, spanId));
+                ul.append(getLiTagWithTextInSpan(liId, element.name,'Collapsable'));
                 if (element.children) {
                     let ulId = generateUUID();
                     $('#' + liId).append("<ul id='" + ulId + "'></ul>");
@@ -137,13 +135,13 @@
         }
         generateTree(inputdata);
         $(".Collapsable").click(function () {
-            $(this).parent().children().toggle();
-            $(this).toggle();
+            //$(this).children().toggle();
+            //$(this).toggle();
         });
 
         $(".Collapsable").each(function () {
-            $(this).parent().children().toggle();
-            $(this).toggle();
+            //$(this).children().toggle();
+            //$(this).toggle();
         });
 
         function updateClass() {
