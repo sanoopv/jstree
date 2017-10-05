@@ -3,75 +3,31 @@
 
 <head>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <style>
+        li {
+            list-style-type: none;
+            cursor: pointer;
+        }
+
+        .leaf {
+            color: green;
+        }
+
+        .parent {
+            color: red;
+        }
+
+        .root {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
+
+
     <input type="text" />
     <div class='cover'>
-        <ul id="ul1">
-            <li id="ul1_li1">item1
-                <ul id="ul1_li1_ul1">
-                    <li id="ul1_li1_ul1_li1"><span id="ul1_li1_ul1_li1_span1" ondragover="allowDrop(event)" ondrop="drop(event)" draggable="true"
-                            ondragstart="drag(event)" class="Collapsable level1">item 11</span></li>
-                    <li id="ul1_li1_ul1_li2"><span id="ul1_li1_ul1_li2_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                            ondrop="drop(event)" class="Collapsable level1">item 12</span>
-                        <ul id="ul1_li1_ul1_li2_ul1">
-                            <li id="ul1_li1_ul1_li2_ul1_li1"><span id="ul1_li1_ul1_li2_ul1_li1_span1" draggable="true" ondragstart="drg(event)" ondragover="allowDrop(event)"
-                                    ondrop="drop(event)" class="Collapsable">item 121</span></li>
-                            <li id="ul1_li1_ul1_li2_ul1_li2"><span id="ul1_li1_ul1_li2_ul1_li2_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                                    ondrop="drop(event)" class="Collapsable level2">item 122</span></li>
-                            <li id="ul1_li1_ul1_li2_ul1_li3"><span id="ul1_li1_ul1_li2_ul1_li3_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                                    ondrop="drop(event)" class="Collapsable level2">item 123</span></li>
-                            <li id="ul1_li1_ul1_li2_ul1_li4"><span id="ul1_li1_ul1_li2_ul1_li4_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                                    ondrop="drop(event)" class="Collapsable level2">item 124</span></li>
-                        </ul>
-                    </li>
-                    <li id="ul1_li1_ul1_li3"><span id="ul1_li1_ul1_li3_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                            ondrop="drop(event)" class="Collapsable level1">item 13</span></li>
-                    <li id="ul1_li1_ul1_li4"><span id="ul1_li1_ul1_li4_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                            ondrop="drop(event)" class="Collapsable level1">item 14</span>
-                        <ul id="ul1_li1_ul1_li4_ul1">
-                            <li id="ul1_li1_ul1_li4_ul1_li1"><span id="ul1_li1_ul1_li4_ul1_li1_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                                    ondrop="drop(event)" class="Collapsable level2">item 141</span></li>
-                            <li id="ul1_li1_ul1_li4_ul1_li2"><span id="ul1_li1_ul1_li4_ul1_li2_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                                    ondrop="drop(event)" class="Collapsable level2">item 142</span></li>
-                            <li id="ul1_li1_ul1_li4_ul1_li3"><span id="ul1_li1_ul1_li4_ul1_li3_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                                    ondrop="drop(event)" class="Collapsable level2">item 143</span></li>
-                            <li id="ul1_li1_ul1_li4_ul1_li4"><span id="ul1_li1_ul1_li4_ul1_li4_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                                    ondrop="drop(event)" class="Collapsable level2">item 144</span></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li id="ul1_li2"><span id="ul1_li2_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)" ondrop="drop(event)"
-                    class="Collapsable">item 2</span>
-                <ul id="ul1_li2_ul1">
-                    <li id="ul1_li2_ul1_li1"><span id="ul1_li2_ul1_li1_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                            ondrop="drop(event)" class="Collapsable level1">item 21</span></li>
-                    <li id="ul1_li2_ul1_li2"><span id="ul1_li2_ul1_li2_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                            ondrop="drop(event)" class="Collapsable level1">item 22</span></li>
-                    <li id="ul1_li2_ul1_li3"><span id="ul1_li2_ul1_li3_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                            ondrop="drop(event)" class="Collapsable level1">item 23</span></li>
-                    <li id="ul1_li2_ul1_li4"><span id="ul1_li2_ul1_li4_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                            ondrop="drop(event)" class="Collapsable level1">item 24</span></li>
-                </ul>
-            </li>
-            <li id="ul1_li3"><span id="ul1_li3_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)" ondrop="drop(event)"
-                    class="Collapsable">item 3</span>
-                <ul id="ul1_li3_ul1">
-                    <li id="ul1_li3_ul1_li1"><span id="ul1_li3_ul1_li1_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                            ondrop="drop(event)" class="Collapsable level1">item 31</span></li>
-                    <li id="ul1_li3_ul1_li2"><span id="ul1_li3_ul1_li2_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                            ondrop="drop(event)" class="Collapsable level1">item 32</span></li>
-                    <li id="ul1_li3_ul1_li3"><span id="ul1_li3_ul1_li3_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                            ondrop="drop(event)" class="Collapsable level1">item 33</span></li>
-                    <li id="ul1_li3_ul1_li4"><span id="ul1_li3_ul1_li4_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)"
-                            ondrop="drop(event)" class="Collapsable level1">item 34</span></li>
-                </ul>
-            </li>
-            <li id="ul1_li4"><span id="ul1_li4_span1" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)" ondrop="drop(event)"
-                    class="Collapsable">item 4</span></li>
-        </ul>
     </div>
     <script>
         function allowDrop(ev) {
@@ -83,8 +39,10 @@
         }
 
         function drop(ev) {
+            //debugger;
             ev.preventDefault();
-            var data = ev.dataTransfer.getData("text");
+            let data = ev.dataTransfer.getData("text");
+            let ul = $('#' + data).parent().parent();
             if ($('#' + ev.target.id).parent().children('ul').length > 0) {
                 $('#' + ev.target.id).parent().children('ul')[0].append($('#' + data).parent()[0]);
             } else {
@@ -92,8 +50,12 @@
                 $('#' + ev.target.id).parent().append("<ul id='" + id + "'></ul>");
                 $('#' + id).append($('#' + data).parent()[0]);
             }
+            if (ul.children('li').length == 0) {
+                ul.remove();
+            }
+            updateClass();
         }
-        
+
         var $cover = $('span');
         $("input").keyup(function () {
             var mysearchword = $("input:text").val();
@@ -142,38 +104,58 @@
             ]
         };
 
+        function getLiTagWithTextInSpan(liId, text, style ='') {
+            return "<li id ='" + liId + "' class='" + style +
+                "' draggable='true' ondragstart='drag(event)' ondragover='allowDrop(event)' ondrop='drop(event)'>" +
+                text + "</li>"
+        }
+
         function generateTree(input) {
             var $coveringdiv = $('.cover');
             let id = generateUUID();
+            let liId = generateUUID();
             $coveringdiv.append("<ul id='" + id + "'></ul>");
+            $('#' + id).append(getLiTagWithTextInSpan(liId, input.root, "root parent"));
+            //$('#' + liId).toggle();
+            id = generateUUID();
+            $('#' + liId).append("<ul id='" + id + "'></ul>");
             generateNodes(input.data, $('#' + id))
         }
 
         function generateNodes(data, ul) {
             data.forEach(function (element) {
                 let liId = generateUUID();
-                let spanId = generateUUID();
-                ul.append("<li id ='" + liId + "'><span id='" + spanId + "' class='Collapsable' draggable='true' ondragstart='drag(event)'' ondragover='allowDrop(event)'' ondrop='drop(event)'' >"+ element.name +"</span></li>")
+                ul.append(getLiTagWithTextInSpan(liId, element.name,'Collapsable'));
                 if (element.children) {
-                    let ulid = generateUUID();
-                    $('#' + liId).append("<ul id='" + ulid + "'></ul>");
-                    generateNodes(element.children,$('#' + ulid));
+                    let ulId = generateUUID();
+                    $('#' + liId).append("<ul id='" + ulId + "'></ul>");
+                    generateNodes(element.children, $('#' + ulId));
                 }
             }, this);
         }
         generateTree(inputdata);
         $(".Collapsable").click(function () {
-
-            $(this).parent().children().toggle();
-            $(this).toggle();
-
+            //$(this).children().toggle();
+            //$(this).toggle();
         });
 
         $(".Collapsable").each(function () {
-
-            $(this).parent().children().toggle();
-            $(this).toggle();
+            //$(this).children().toggle();
+            //$(this).toggle();
         });
+
+        function updateClass() {
+            $("span").each(function () {
+                if ($(this).parent().children('ul').length > 0) {
+                    $(this).removeClass('leaf');
+                    $(this).addClass('parent');
+                } else {
+                    $(this).removeClass('parent');
+                    $(this).addClass('leaf');
+                }
+            });
+        }
+        updateClass();
     </script>
 
 </body>
