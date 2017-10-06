@@ -8,9 +8,10 @@ function drag(ev) {
 
 function drop(ev) {
     ev.preventDefault();
+    $('li').unhighlight();
     let data = ev.dataTransfer.getData('text');
     let ul = $(`#${data}`).parent().parent();
-    if ($(`#${ev.target.id}`).parent().children('ul').length > 0) {
+    if ($(`#${ev.target.id}`).parent().children('ul').length) {
         $(`#${ev.target.id}`).parent().children('ul')[0].append($('#' + data).parent()[0]);
     } else {
         let id = generateUUID();
@@ -21,12 +22,19 @@ function drop(ev) {
         ul.remove();
     }
     updateClass();
+    searchAndHighlight();
 }
 
 function generateUUID() { // Public Domain/MIT
     let d = new Date().getTime();
     if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
-        d += performance.now(); //use high-precision timer if available
+        d += performance.now();
+        //use high-precision timer if available
+        //performance variable from window
+        //offsetting the first 13 hex numbers by a hex portion of the timestamp. 
+        //That way, even if Math.random is on the same seed, both clients would have to 
+        //generate the UUID at the exact same millisecond (or 10,000+ years later) to get 
+        //the same UUID:
     }
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
         let r = (d + Math.random() * 16) % 16 | 0;
@@ -75,4 +83,14 @@ function updateClass() {
             $(el).addClass('leaf');
         }
     });
+}
+
+function searchAndHighlight() {
+    $('.searchStatus').text('');
+    let searchWord = $('.search').val();
+    $('li').unhighlight();
+    $('li').highlight(searchWord);
+    if ($('.highlight').length === 0 && searchWord.length > 0) {
+        $('.searchStatus').text('Search text not found');
+    }
 }

@@ -48,14 +48,8 @@
             $(el).parent().children().toggle();
             $(el).toggle();
         });
-        $('.search').keyup(() => {
-            $('.searchStatus').text('');
-            let searchWord = $('.search').val();
-            $('li').unhighlight();
-            $('li').highlight(searchWord);
-            if ($('.highlight').length === 0 && searchWord.length > 0) {
-                $('.searchStatus').text('Search text not found');
-            }
-        });
+        $('.search').keyup(searchAndHighlight);
+
+       
     </script>
 </body>
