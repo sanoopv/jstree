@@ -4,86 +4,15 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
     <script src="jquery.highlight.js"></script>
-    <style>
-        li {
-            list-style-type: none;
-            cursor: pointer;
-        }
-
-        .leaf {
-            color: green;
-        }
-
-        .parent {
-            font-weight: bold;
-            color: red;
-        }
-
-        .root {
-            text-decoration: underline;
-        }
-
-        .highlight {
-            background-color: #FFFF88;
-            font-weight: bold;
-        }
-    </style>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-
-
-    <input type="text" /><span class = '' id="searchstatus"></span>
+    <input type="text" /><span class='' id="searchstatus"></span>
     <div class='cover'>
     </div>
     <script>
-        function allowDrop(ev) {
-            ev.preventDefault();
-        }
-
-        function drag(ev) {
-            ev.dataTransfer.setData("text", ev.target.id);
-        }
-
-        function drop(ev) {
-            ev.preventDefault();
-            let data = ev.dataTransfer.getData("text");
-            let ul = $('#' + data).parent().parent();
-            if ($('#' + ev.target.id).parent().children('ul').length > 0) {
-                $('#' + ev.target.id).parent().children('ul')[0].append($('#' + data).parent()[0]);
-            } else {
-                let id = generateUUID();
-                $('#' + ev.target.id).parent().append("<ul id='" + id + "'></ul>");
-                $('#' + id).append($('#' + data).parent()[0]);
-            }
-            if (ul.children('li').length === 0) {
-                ul.remove();
-            }
-            updateClass();
-        }
-
-        $("input").keyup(function () {
-            $("#searchstatus").text('');
-            var mysearchword = $("input:text").val();
-            $('li').unhighlight();
-            $('li').highlight(mysearchword);
-            if ($('.highlight').length === 0 && mysearchword.length > 0) {
-                $("#searchstatus").text('Search text not found');
-            }
-        });
-
-        function generateUUID() { // Public Domain/MIT
-            var d = new Date().getTime();
-            if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
-                d += performance.now(); //use high-precision timer if available
-            }
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                var r = (d + Math.random() * 16) % 16 | 0;
-                d = Math.floor(d / 16);
-                return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-            });
-        }
-
         var inputdata = {
             root: 'root',
             data: [{
@@ -109,61 +38,24 @@
                 }
             ]
         };
-
-        function getLiTagWithTextInSpan(liId, text, spanId, style='') {
-            return "<li id ='" + liId + "'><span id='" + spanId +
-                "' class='" + style +
-                "' draggable='true' ondragstart='drag(event)'' ondragover='allowDrop(event)'' ondrop='drop(event)'' >" +
-                text + "</span></li>"
-        }
-
-        function generateTree(input) {
-            var $coveringdiv = $('.cover');
-            let id = generateUUID();
-            let liId = generateUUID();
-            let spanId = generateUUID();
-            $coveringdiv.append("<ul id='" + id + "'></ul>");
-            $('#' + id).append(getLiTagWithTextInSpan(liId, input.root, spanId, "Collapsable root parent"));
-            id = generateUUID();
-            $('#' + liId).append("<ul id='" + id + "'></ul>");
-            generateNodes(input.data, $('#' + id))
-        }
-
-        function generateNodes(data, ul) {
-            data.forEach(function (element) {
-                let liId = generateUUID();
-                let spanId = generateUUID();
-                ul.append(getLiTagWithTextInSpan(liId, element.name, spanId,'Collapsable'));
-                if (element.children) {
-                    let ulId = generateUUID();
-                    $('#' + liId).append("<ul id='" + ulId + "'></ul>");
-                    generateNodes(element.children, $('#' + ulId));
-                }
-            }, this);
-        }
         generateTree(inputdata);
+        updateClass();
         $(".Collapsable").click(function () {
             $(this).parent().children().toggle();
             $(this).toggle();
         });
-
         $(".Collapsable").each(function () {
             $(this).parent().children().toggle();
             $(this).toggle();
         });
-
-        function updateClass() {
-            $(".cover span").each(function () {
-                if ($(this).parent().children('ul').length > 0) {
-                    $(this).removeClass('leaf');
-                    $(this).addClass('parent');
-                } else {
-                    $(this).removeClass('parent');
-                    $(this).addClass('leaf');
-                }
-            });
-        }
-        updateClass();
+        $("input").keyup(function () {
+            $("#searchstatus").text('');
+            var mysearchword = $("input:text").val();
+            $('li').unhighlight();
+            $('li').highlight(mysearchword);
+            if ($('.highlight').length === 0 && mysearchword.length > 0) {
+                $("#searchstatus").text('Search text not found');
+            }
+        });
     </script>
-
 </body>
