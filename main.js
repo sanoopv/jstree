@@ -9,13 +9,13 @@ function drag(ev) {
 function drop(ev) {
     ev.preventDefault();
     let data = ev.dataTransfer.getData('text');
-    let ul = $('#' + data).parent().parent();
-    if ($('#' + ev.target.id).parent().children('ul').length > 0) {
-        $('#' + ev.target.id).parent().children('ul')[0].append($('#' + data).parent()[0]);
+    let ul = $(`#${data}`).parent().parent();
+    if ($(`#${ev.target.id}`).parent().children('ul').length > 0) {
+        $(`#${ev.target.id}`).parent().children('ul')[0].append($('#' + data).parent()[0]);
     } else {
         let id = generateUUID();
-        $('#' + ev.target.id).parent().append(`<ul id='${id}'></ul>`);
-        $('#' + id).append($('#' + data).parent()[0]);
+        $(`#${ev.target.id}`).parent().append(`<ul id='${id}'></ul>`);
+        $(`#${id}`).append($(`#${data}`).parent()[0]);
     }
     if (ul.children('li').length === 0) {
         ul.remove();
@@ -35,32 +35,32 @@ function generateUUID() { // Public Domain/MIT
     });
 }
 
-function getLiTagWithTextInSpan(liId, text, spanId, style = '') {
-    return `<li id ='${liId}'><span id='${spanId}' class='${style}' draggable='true' ondragstart='drag(event)' ondragover='allowDrop(event)' ondrop='drop(event)'>${text}</span></li>`;
+function getLiTagWithTextInSpan(idForLiTag, text, idForSpanTag, style = '') {
+    return `<li id ='${idForLiTag}'><span id='${idForSpanTag}' class='${style}' draggable='true' ondragstart='drag(event)' ondragover='allowDrop(event)' ondrop='drop(event)'>${text}</span></li>`;
 }
 
 function generateTree(input) {
-    let $coveringdiv = $('.cover');
-    let id = generateUUID();
-    let liId = generateUUID();
-    let spanId = generateUUID();
-    $coveringdiv.append(`<ul id='${id}'></ul>`);
+    let coveringDiv = $('.cover');
+    let idForUlTag = generateUUID();
+    let idForLiTag = generateUUID();
+    let idForSpanTag = generateUUID();
+    coveringDiv.append(`<ul id='${idForUlTag}'></ul>`);
     //debugger;
-    $('#' + id).append(getLiTagWithTextInSpan(liId, input.root, spanId, "Collapsable root parent"));
-    id = generateUUID();
-    $('#' + liId).append(`<ul id='${id}'></ul>`);
-    generateNodes(input.data, $('#' + id))
+    $(`#${idForUlTag}`).append(getLiTagWithTextInSpan(idForLiTag, input.root, idForSpanTag, 'Collapsable root parent'));
+    idForUlTag = generateUUID();
+    $(`#${idForLiTag}`).append(`<ul id='${idForUlTag}'></ul>`);
+    generateNodes(input.data, $(`#${idForUlTag}`));
 }
 
 function generateNodes(data, ul) {
     data.forEach((element) => {
-        let liId = generateUUID();
-        let spanId = generateUUID();
-        ul.append(getLiTagWithTextInSpan(liId, element.name, spanId, 'Collapsable'));
+        let idForLiTag = generateUUID();
+        let idForSpanTag = generateUUID();
+        ul.append(getLiTagWithTextInSpan(idForLiTag, element.name, idForSpanTag, 'Collapsable'));
         if (element.children) {
-            let ulId = generateUUID();
-            $('#' + liId).append(`<ul id='${ulId}'></ul>`);
-            generateNodes(element.children, $('#' + ulId));
+            let idForUlTag = generateUUID();
+            $('#' + idForLiTag).append(`<ul id='${idForUlTag}'></ul>`);
+            generateNodes(element.children, $('#' + idForUlTag));
         }
     }, this);
 }
