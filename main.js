@@ -3,18 +3,18 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
+    ev.dataTransfer.setData('text', ev.target.id);
 }
 
 function drop(ev) {
     ev.preventDefault();
-    let data = ev.dataTransfer.getData("text");
+    let data = ev.dataTransfer.getData('text');
     let ul = $('#' + data).parent().parent();
     if ($('#' + ev.target.id).parent().children('ul').length > 0) {
         $('#' + ev.target.id).parent().children('ul')[0].append($('#' + data).parent()[0]);
     } else {
         let id = generateUUID();
-        $('#' + ev.target.id).parent().append("<ul id='" + id + "'></ul>");
+        $('#' + ev.target.id).parent().append(`<ul id='${id}'></ul>`);
         $('#' + id).append($('#' + data).parent()[0]);
     }
     if (ul.children('li').length === 0) {
@@ -36,10 +36,7 @@ function generateUUID() { // Public Domain/MIT
 }
 
 function getLiTagWithTextInSpan(liId, text, spanId, style = '') {
-    return "<li id ='" + liId + "'><span id='" + spanId +
-        "' class='" + style +
-        "' draggable='true' ondragstart='drag(event)'' ondragover='allowDrop(event)'' ondrop='drop(event)'' >" +
-        text + "</span></li>"
+    return `<li id ='${liId}'><span id='${spanId}' class='${style}' draggable='true' ondragstart='drag(event)' ondragover='allowDrop(event)' ondrop='drop(event)'>${text}</span></li>`;
 }
 
 function generateTree(input) {
@@ -47,10 +44,11 @@ function generateTree(input) {
     let id = generateUUID();
     let liId = generateUUID();
     let spanId = generateUUID();
-    $coveringdiv.append("<ul id='" + id + "'></ul>");
+    $coveringdiv.append(`<ul id='${id}'></ul>`);
+    //debugger;
     $('#' + id).append(getLiTagWithTextInSpan(liId, input.root, spanId, "Collapsable root parent"));
     id = generateUUID();
-    $('#' + liId).append("<ul id='" + id + "'></ul>");
+    $('#' + liId).append(`<ul id='${id}'></ul>`);
     generateNodes(input.data, $('#' + id))
 }
 
@@ -61,14 +59,14 @@ function generateNodes(data, ul) {
         ul.append(getLiTagWithTextInSpan(liId, element.name, spanId, 'Collapsable'));
         if (element.children) {
             let ulId = generateUUID();
-            $('#' + liId).append("<ul id='" + ulId + "'></ul>");
+            $('#' + liId).append(`<ul id='${ulId}'></ul>`);
             generateNodes(element.children, $('#' + ulId));
         }
     }, this);
 }
 
 function updateClass() {
-    $(".cover span").each(function () {
+    $('.cover span').each(function () {
         if ($(this).parent().children('ul').length > 0) {
             $(this).removeClass('leaf');
             $(this).addClass('parent');
