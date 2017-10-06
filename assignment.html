@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <input type='text' /><span class='searchstatus'></span>
+    <input type='text' class='search' /><span class='searchStatus'></span>
     <div class='cover'>
     </div>
     <script>
@@ -48,13 +48,13 @@
             $(el).parent().children().toggle();
             $(el).toggle();
         });
-        $('input').keyup(() => {
-            $('.searchstatus').text('');
-            let mysearchword = $('input:text').val();
+        $('.search').keyup(() => {
+            $('.searchStatus').text('');
+            let searchWord = $('.search').val();
             $('li').unhighlight();
-            $('li').highlight(mysearchword);
-            if ($('.highlight').length === 0 && mysearchword.length > 0) {
-                $('.searchstatus').text('Search text not found');
+            $('li').highlight(searchWord);
+            if ($('.highlight').length === 0 && searchWord.length > 0) {
+                $('.searchStatus').text('Search text not found');
             }
         });
     </script>
