@@ -46,7 +46,6 @@
         }
 
         function drop(ev) {
-            //debugger;
             ev.preventDefault();
             let data = ev.dataTransfer.getData("text");
             let ul = $('#' + data).parent().parent();
@@ -57,7 +56,7 @@
                 $('#' + ev.target.id).parent().append("<ul id='" + id + "'></ul>");
                 $('#' + id).append($('#' + data).parent()[0]);
             }
-            if (ul.children('li').length == 0) {
+            if (ul.children('li').length === 0) {
                 ul.remove();
             }
             updateClass();
