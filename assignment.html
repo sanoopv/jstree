@@ -3,6 +3,7 @@
 
 <head>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="jquery.highlight.js"></script>
     <style>
         li {
             list-style-type: none;
@@ -14,11 +15,17 @@
         }
 
         .parent {
+            font-weight: bold;
             color: red;
         }
 
         .root {
             text-decoration: underline;
+        }
+
+        .highlight {
+            background-color: #FFFF88;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -26,7 +33,7 @@
 <body>
 
 
-    <input type="text" />
+    <input type="text" /><span class = '' id="searchstatus"></span>
     <div class='cover'>
     </div>
     <script>
@@ -50,20 +57,20 @@
                 $('#' + ev.target.id).parent().append("<ul id='" + id + "'></ul>");
                 $('#' + id).append($('#' + data).parent()[0]);
             }
-            if(ul.children('li').length == 0){
+            if (ul.children('li').length == 0) {
                 ul.remove();
-            } 
+            }
             updateClass();
         }
 
-        var $cover = $('span');
         $("input").keyup(function () {
+            $("#searchstatus").text('');
             var mysearchword = $("input:text").val();
-            $cover.find('span.highlight').contents().unwrap();
-            var re = new RegExp('(' + mysearchword.trim().split(/\s+/).join('|') + ')', "gi");
-            $cover.html(function (i, html) {
-                return html.replace(re, '<span class="highlight">$1</span>')
-            });
+            $('li').unhighlight();
+            $('li').highlight(mysearchword);
+            if ($('.highlight').length === 0 && mysearchword.length > 0) {
+                $("#searchstatus").text('Search text not found');
+            }
         });
 
         function generateUUID() { // Public Domain/MIT
@@ -104,9 +111,9 @@
             ]
         };
 
-        function getLiTagWithTextInSpan(liId, text, spanId, style) {
+        function getLiTagWithTextInSpan(liId, text, spanId, style='') {
             return "<li id ='" + liId + "'><span id='" + spanId +
-                "' class='Collapsable " + style +
+                "' class='" + style +
                 "' draggable='true' ondragstart='drag(event)'' ondragover='allowDrop(event)'' ondrop='drop(event)'' >" +
                 text + "</span></li>"
         }
@@ -117,7 +124,7 @@
             let liId = generateUUID();
             let spanId = generateUUID();
             $coveringdiv.append("<ul id='" + id + "'></ul>");
-            $('#' + id).append(getLiTagWithTextInSpan(liId, input.root, spanId, "root parent"));
+            $('#' + id).append(getLiTagWithTextInSpan(liId, input.root, spanId, "Collapsable root parent"));
             id = generateUUID();
             $('#' + liId).append("<ul id='" + id + "'></ul>");
             generateNodes(input.data, $('#' + id))
@@ -127,7 +134,7 @@
             data.forEach(function (element) {
                 let liId = generateUUID();
                 let spanId = generateUUID();
-                ul.append(getLiTagWithTextInSpan(liId, element.name, spanId));
+                ul.append(getLiTagWithTextInSpan(liId, element.name, spanId,'Collapsable'));
                 if (element.children) {
                     let ulId = generateUUID();
                     $('#' + liId).append("<ul id='" + ulId + "'></ul>");
@@ -147,7 +154,7 @@
         });
 
         function updateClass() {
-            $("span").each(function () {
+            $(".cover span").each(function () {
                 if ($(this).parent().children('ul').length > 0) {
                     $(this).removeClass('leaf');
                     $(this).addClass('parent');
