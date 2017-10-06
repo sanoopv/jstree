@@ -24,12 +24,12 @@ function drop(ev) {
 }
 
 function generateUUID() { // Public Domain/MIT
-    var d = new Date().getTime();
+    let d = new Date().getTime();
     if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
         d += performance.now(); //use high-precision timer if available
     }
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = (d + Math.random() * 16) % 16 | 0;
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+        let r = (d + Math.random() * 16) % 16 | 0;
         d = Math.floor(d / 16);
         return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
@@ -40,7 +40,7 @@ function getLiTagWithTextInSpan(liId, text, spanId, style = '') {
 }
 
 function generateTree(input) {
-    var $coveringdiv = $('.cover');
+    let $coveringdiv = $('.cover');
     let id = generateUUID();
     let liId = generateUUID();
     let spanId = generateUUID();
@@ -53,7 +53,7 @@ function generateTree(input) {
 }
 
 function generateNodes(data, ul) {
-    data.forEach(function (element) {
+    data.forEach((element) => {
         let liId = generateUUID();
         let spanId = generateUUID();
         ul.append(getLiTagWithTextInSpan(liId, element.name, spanId, 'Collapsable'));
@@ -66,13 +66,13 @@ function generateNodes(data, ul) {
 }
 
 function updateClass() {
-    $('.cover span').each(function () {
-        if ($(this).parent().children('ul').length > 0) {
-            $(this).removeClass('leaf');
-            $(this).addClass('parent');
+    $('.cover span').map((i, el) => {
+        if ($(el).parent().children('ul').length > 0) {
+            $(el).removeClass('leaf');
+            $(el).addClass('parent');
         } else {
-            $(this).removeClass('parent');
-            $(this).addClass('leaf');
+            $(el).removeClass('parent');
+            $(el).addClass('leaf');
         }
     });
 }

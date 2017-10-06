@@ -40,15 +40,15 @@
         };
         generateTree(inputdata);
         updateClass();
-        $('.Collapsable').click(function () {
-            $(this).parent().children().toggle();
-            $(this).toggle();
+        $('.Collapsable').click((event) => {
+            $(event.currentTarget).parent().children().toggle();
+            $(event.currentTarget).toggle();
         });
-        $('.Collapsable').each(function () {
-            $(this).parent().children().toggle();
-            $(this).toggle();
+        $('.Collapsable').map((i, el) => {
+            $(el).parent().children().toggle();
+            $(el).toggle();
         });
-        $('input').keyup(function () {
+        $('input').keyup(() => {
             $('.searchstatus').text('');
             let mysearchword = $('input:text').val();
             $('li').unhighlight();
