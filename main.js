@@ -53,7 +53,6 @@ function generateTree(input) {
     let idForLiTag = generateUUID();
     let idForSpanTag = generateUUID();
     coveringDiv.append(`<ul id='${idForUlTag}'></ul>`);
-    //debugger;
     $(`#${idForUlTag}`).append(getLiTagWithTextInSpan(idForLiTag, input.root, idForSpanTag, 'Collapsable root parent'));
     idForUlTag = generateUUID();
     $(`#${idForLiTag}`).append(`<ul id='${idForUlTag}'></ul>`);
